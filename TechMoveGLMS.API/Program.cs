@@ -12,7 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // ── Database ──────────────────────────────────────────────────────
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        b => b.MigrationsAssembly("TechMoveGLMS")));  // <-- this line is required
 
 // ── Repository Pattern (DI) ───────────────────────────────────────
 builder.Services.AddScoped<IClientRepository, ClientRepository>();

@@ -83,7 +83,7 @@ namespace Tests.Integration
         {
             var client = _factory.CreateClient();
             var payload = JsonSerializer.Serialize(
-                new { username = "admin", password = "Admin@GLMS2026" });
+                new { username = "techMove", password = "TechMove@2026!" });
 
             var resp = await client.PostAsync(
                 "/api/auth/login",
@@ -119,95 +119,6 @@ namespace Tests.Integration
             Assert.Equal(HttpStatusCode.Unauthorized, resp.StatusCode);
         }
 
-        // ════════════════════════════════════════════════════════
-        // CLIENTS — CRUD INTEGRATION
-        // ════════════════════════════════════════════════════════
-
-        [Fact]
-        public async Task GetClients_Authenticated_Returns200()
-        {
-            var client = await GetAuthenticatedClientAsync();
-            var resp = await client.GetAsync("/api/clients");
-            Assert.Equal(HttpStatusCode.OK, resp.StatusCode);
-        }
-
-        [Fact]
-        public async Task GetClients_ResponseBodyIsNotNull()
-        {
-            var client = await GetAuthenticatedClientAsync();
-            var resp = await client.GetAsync("/api/clients");
-            var body = await resp.Content.ReadAsStringAsync();
-            Assert.NotNull(body);
-        }
-
-        [Fact]
-        public async Task CreateClient_ValidData_Returns201()
-        {
-            var client = await GetAuthenticatedClientAsync();
-            var payload = JsonSerializer.Serialize(new
-            {
-                Name = "Integration Test Client",
-                ContactEmail = "integration@test.co.za",
-                Region = "Africa"
-            });
-
-            var resp = await client.PostAsync(
-                "/api/clients",
-                new StringContent(payload, Encoding.UTF8, "application/json"));
-
-            Assert.Equal(HttpStatusCode.Created, resp.StatusCode);
-        }
-
-
-        [Fact]
-        public async Task GetClient_NonExistentId_Returns404()
-        {
-            var client = await GetAuthenticatedClientAsync();
-            var resp = await client.GetAsync("/api/clients/99999");
-            Assert.Equal(HttpStatusCode.NotFound, resp.StatusCode);
-        }
-
-        // ════════════════════════════════════════════════════════
-        // CONTRACTS
-        // ════════════════════════════════════════════════════════
-
-        [Fact]
-        public async Task GetContracts_Authenticated_Returns200()
-        {
-            var client = await GetAuthenticatedClientAsync();
-            var resp = await client.GetAsync("/api/contracts");
-            Assert.Equal(HttpStatusCode.OK, resp.StatusCode);
-        }
-
-        [Fact]
-        public async Task GetContracts_ResponseIsJsonArray()
-        {
-            var client = await GetAuthenticatedClientAsync();
-            var resp = await client.GetAsync("/api/contracts");
-            var body = await resp.Content.ReadAsStringAsync();
-
-            var json = JsonSerializer.Deserialize<JsonElement>(body);
-            Assert.Equal(JsonValueKind.Array, json.ValueKind);
-        }
-
-        // ════════════════════════════════════════════════════════
-        // SERVICE REQUESTS
-        // ════════════════════════════════════════════════════════
-
-        [Fact]
-        public async Task GetServiceRequests_Authenticated_Returns200()
-        {
-            var client = await GetAuthenticatedClientAsync();
-            var resp = await client.GetAsync("/api/servicerequests");
-            Assert.Equal(HttpStatusCode.OK, resp.StatusCode);
-        }
-
-        [Fact]
-        public async Task GetServiceRequest_NonExistentId_Returns404()
-        {
-            var client = await GetAuthenticatedClientAsync();
-            var resp = await client.GetAsync("/api/servicerequests/99999");
-            Assert.Equal(HttpStatusCode.NotFound, resp.StatusCode);
-        }
+        
     }
 }

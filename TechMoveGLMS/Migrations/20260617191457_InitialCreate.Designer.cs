@@ -12,8 +12,8 @@ using TechMoveGLMS.Data;
 namespace TechMoveGLMS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260515231547_new")]
-    partial class @new
+    [Migration("20260617191457_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

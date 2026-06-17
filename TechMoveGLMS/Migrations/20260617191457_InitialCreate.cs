@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace TechMoveGLMS.Migrations
 {
     /// <inheritdoc />
@@ -47,7 +49,7 @@ namespace TechMoveGLMS.Migrations
                         column: x => x.ClientId,
                         principalTable: "Clients",
                         principalColumn: "ClientId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -58,8 +60,8 @@ namespace TechMoveGLMS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ContractId = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    OriginalCostUSD = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ConvertedCostZAR = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OriginalCostUSD = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    ConvertedCostZAR = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -72,6 +74,29 @@ namespace TechMoveGLMS.Migrations
                         principalColumn: "ContractId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Clients",
+                columns: new[] { "ClientId", "ContactEmail", "Name", "Region" },
+                values: new object[,]
+                {
+                    { 1, "billing@acme.com", "Acme Global", "North America" },
+                    { 2, "admin@sita.co.za", "SITA Logistics SA", "Africa" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Contracts",
+                columns: new[] { "ContractId", "ClientId", "EndDate", "Level", "SignedAgreementFilePath", "StartDate", "Status" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2027, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, null, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, null, new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ServiceRequests",
+                columns: new[] { "RequestId", "ContractId", "ConvertedCostZAR", "Description", "OriginalCostUSD", "Status" },
+                values: new object[] { 1, 1, 28500.00m, "Initial Freight Setup", 1500.00m, "Pending" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contracts_ClientId",
