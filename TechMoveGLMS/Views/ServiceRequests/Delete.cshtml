@@ -1,0 +1,49 @@
+﻿@model TechMoveGLMS.Models.ServiceRequest
+@{
+    ViewData["Title"] = "Delete Service Request";
+}
+
+<div class="dashboard-header">
+    <h2>Delete Service Request</h2>
+</div>
+
+<div class="danger-card">
+    <h3><i class="fa-solid fa-triangle-exclamation"></i> Confirm Deletion</h3>
+    <p style="color:#6b7280; margin-bottom:20px;">
+        This will permanently remove the service request and all associated cost records.
+        This action cannot be undone.
+    </p>
+
+    <div class="detail-row">
+        <span class="detail-label">Contract</span>
+        <span class="detail-value">Contract #@Model.Contract?.ContractId</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">Description</span>
+        <span class="detail-value">@Model.Description</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">USD Cost</span>
+        <span class="detail-value">$ @Model.OriginalCostUSD.ToString("N2")</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">ZAR Cost</span>
+        <span class="detail-value">R @Model.ConvertedCostZAR.ToString("N2")</span>
+    </div>
+    <div class="detail-row">
+        <span class="detail-label">Status</span>
+        <span class="detail-value">@Model.Status</span>
+    </div>
+</div>
+
+<div class="form-actions" style="border:none; padding-top:0; margin-top:16px;">
+    <form asp-action="Delete" style="display:inline;">
+        <input type="hidden" asp-for="RequestId" />
+        <button type="submit" class="btn-danger">
+            <i class="fa-solid fa-trash"></i> Yes, Delete Permanently
+        </button>
+    </form>
+    <a asp-action="Index" class="btn-secondary">
+        <i class="fa-solid fa-arrow-left"></i> Cancel
+    </a>
+</div>

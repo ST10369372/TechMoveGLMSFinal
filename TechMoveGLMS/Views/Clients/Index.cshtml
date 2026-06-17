@@ -1,0 +1,64 @@
+﻿@model IEnumerable<TechMoveGLMS.Models.Client>
+@{
+    ViewData["Title"] = "Clients";
+}
+
+<div class="dashboard-header">
+    <h2>Client Directory</h2>
+    <a asp-action="Create" class="btn-primary">
+        <i class="fa-solid fa-plus"></i> Add New Client
+    </a>
+</div>
+
+<div class="glass-card">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>Billing Email</th>
+                <th>Region</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="font-weight:600;">@item.Name</td>
+                    <td>
+                        <a href="mailto:@item.ContactEmail" style="color:var(--primary-color);">
+                            @item.ContactEmail
+                        </a>
+                    </td>
+                    <td>
+                        <span style="background:#e5e7eb; padding:4px 10px; border-radius:4px; font-size:0.8rem;">
+                            @item.Region
+                        </span>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ClientId"
+                           style="color:var(--primary-color); margin-right:10px;">
+                            <i class="fa-solid fa-pen"></i> Edit
+                        </a>
+                        <a asp-action="Details" asp-route-id="@item.ClientId"
+                           style="color:#6b7280; margin-right:10px;">
+                            <i class="fa-solid fa-eye"></i> Details
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.ClientId"
+                           style="color:#ef4444;">
+                            <i class="fa-solid fa-trash"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <i class="fa-solid fa-file-contract"></i>
+            <p>No clients found matching your filters.</p>
+        </div>
+    }
+</div>

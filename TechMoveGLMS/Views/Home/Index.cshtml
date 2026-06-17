@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dashboard-header">
+    <h2>Operations Dashboard</h2>
+    <span style="font-size:0.8rem; color:var(--text-muted);">
+        <i class="fa-solid fa-circle" style="color:var(--success); font-size:0.6rem;"></i>
+        System Online
+    </span>
+</div>
+
+<div class="stat-grid">
+    <div class="stat-card">
+        <div class="stat-icon amber"><i class="fa-solid fa-file-contract"></i></div>
+        <div class="stat-info">
+            <p>Active Contracts</p>
+            <strong>@ViewBag.ActiveContracts</strong>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon blue"><i class="fa-solid fa-truck-fast"></i></div>
+        <div class="stat-info">
+            <p>Pending Requests</p>
+            <strong>@ViewBag.PendingRequests</strong>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon green"><i class="fa-solid fa-circle-dollar-to-slot"></i></div>
+        <div class="stat-info">
+            <p>Pending Value (ZAR)</p>
+            <strong>R @string.Format("{0:N0}", ViewBag.TotalPendingValue)</strong>
+        </div>
+    </div>
+</div>
+
+<div class="glass-card">
+    <h3 style="font-size:1rem; font-weight:700; margin-bottom:1rem; color:var(--text-muted);">
+        <i class="fa-solid fa-bolt" style="color:var(--primary);"></i> Quick Actions
+    </h3>
+    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="/Contracts/Create" class="btn-primary">
+            <i class="fa-solid fa-plus"></i> New Contract
+        </a>
+        <a href="/ServiceRequests/Create" class="btn-primary">
+            <i class="fa-solid fa-plus"></i> Raise Request
+        </a>
+        <a href="/Clients/Create" class="btn-secondary">
+            <i class="fa-solid fa-user-plus"></i> Add Client
+        </a>
+        <a href="/Contracts" class="btn-secondary">
+            <i class="fa-solid fa-eye"></i> View All Contracts
+        </a>
+    </div>
+</div>
+
+<div class="glass-card">
+    <p style="color:var(--text-muted); font-size:0.875rem; line-height:1.7;">
+        <i class="fa-solid fa-circle-info" style="color:var(--primary);"></i>
+        &nbsp;TechMove GLMS manages freight contracts, client records, and service requests
+        across all global regions. Use the sidebar to navigate between modules.
+        The API backend is running on <code style="color:var(--primary);">localhost:5080</code>.
+    </p>
+</div>
